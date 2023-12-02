@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Weather App</string>
+    <string name="default_temperature">27</string>
+    <string name="default_weather_desc">Wow it kinda HOT</string>
+</resources>
