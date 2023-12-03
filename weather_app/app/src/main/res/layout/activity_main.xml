@@ -7,6 +7,9 @@
     tools:context=".MainActivity">
 
     <!-- Top Bar -->
+
+
+
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -38,15 +41,27 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="80dp">
 
-        <TextView
-            android:id="@+id/locationLabel"
+        <Button
+            android:id="@+id/button"
+            style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/temperatureTextView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="The current location is:"
+            android:layout_marginTop="1dp"
+            android:text="Start Location Services" />
+
+
+        <TextView
+            android:id="@+id/locationField3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/locationLabel"
+            android:layout_marginTop="71dp"
+            android:layout_centerHorizontal="true"
+            android:text="Hong Kong"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="34sp"
             android:textStyle="bold" />
 
         <TextView
@@ -67,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/locationField"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="71dp"
             android:text="The temperature (in °C) is:"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -79,20 +94,22 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/temperatureLabel"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="31dp"
             android:text="@string/default_temperature"
             android:textColor="@color/white"
             android:textSize="140sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button"
-            style="@style/Widget.Material3.Button.ElevatedButton"
+        <TextView
+            android:id="@+id/locationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/temperatureTextView"
             android:layout_centerHorizontal="true"
-            android:text="Start Location Services" />
+            android:layout_marginTop="16dp"
+            android:text="The current location is:"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

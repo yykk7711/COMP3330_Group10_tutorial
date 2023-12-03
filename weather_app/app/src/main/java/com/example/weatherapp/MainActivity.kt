@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locationLabel: TextView
     private lateinit var locationField: TextView
     private lateinit var temperatureField: TextView
+    private lateinit var locationField3: TextView
     private lateinit var button: Button
     private var isEnabled = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         locationLabel = findViewById(R.id.locationLabel)
         locationField = findViewById(R.id.locationField)
         temperatureField = findViewById(R.id.temperatureTextView)
+        locationField3 = findViewById(R.id.locationField3)
         button = findViewById(R.id.button)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult?.lastLocation?.let { location ->
+                    Log.e("Location_update", "Location update")
                     updateLocationViews(location)
                     callWeather(location)
                 }
@@ -107,7 +110,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun callWeather(location: Location) {
-        val apiUrl ="http://172.20.10.4:5000/weather?lat=" + location.latitude + "&lon=" + location.longitude
+
+        val apiUrl ="http://16.162.192.233:5000/weather?lat=" + location.latitude + "&lon=" + location.longitude
         val request = JsonObjectRequest(Request.Method.GET, apiUrl, null,
             Response.Listener { response ->
                 updateTemperature(response)
@@ -122,8 +126,10 @@ class MainActivity : AppCompatActivity() {
 
     // Update temperature text view accordingly from the JsonObject
     private fun updateTemperature(jsonObject: JSONObject) {
-        // TODO: Update the temperature field
-        temperatureField.text = "?"
+        // Update the temperature field
+        Log.e("TEMP", jsonObject.getString("location") + jsonObject.getString("temperature"))
+        temperatureField.text = jsonObject.getString("temperature")
+        locationField3.text = jsonObject.getString("location")
     }
 
     companion object {

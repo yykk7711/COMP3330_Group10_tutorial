@@ -52,7 +52,6 @@ def getTemperature(station_name):
     response = urlopen("https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en") 
     data = json.loads(response.read())
     for location in data["temperature"]["data"]:
-        print(type(location["place"]))
         if location["place"] == station_name:
             return location["value"]
     
