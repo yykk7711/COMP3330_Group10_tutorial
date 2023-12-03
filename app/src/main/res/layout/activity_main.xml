@@ -87,11 +87,12 @@
 
         <Button
             android:id="@+id/button"
+            style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update"
+            android:layout_below="@id/temperatureTextView"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/temperatureTextView" />
+            android:text="Start Location Services" />
 
     </RelativeLayout>
 
