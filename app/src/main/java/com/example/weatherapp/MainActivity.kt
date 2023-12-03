@@ -59,16 +59,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        requestLocationUpdates()
-    }
-
+    // Stop location services when app stopped
     override fun onStop() {
         super.onStop()
         stopLocationUpdates()
+        isEnabled = false
     }
 
+    // Request Location Updates
     private fun requestLocationUpdates() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -89,10 +87,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Stop Location Services
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
+    // Start Location Services
     private fun updateLocationViews(location: Location) {
         locationField.text = "${location.latitude}, ${location.longitude}"
     }
