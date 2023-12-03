@@ -3,12 +3,18 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     // Location services
@@ -18,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     // Other variables
     private lateinit var locationLabel: TextView
     private lateinit var locationField: TextView
+    private lateinit var temperatureField: TextView
     private lateinit var button: Button
     private var isEnabled = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         locationLabel = findViewById(R.id.locationLabel)
         locationField = findViewById(R.id.locationField)
+        temperatureField = findViewById(R.id.temperatureTextView)
         button = findViewById(R.id.button)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -54,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult?.lastLocation?.let { location ->
                     updateLocationViews(location)
+                    callWeather(location)
                 }
             }
         }
@@ -95,6 +104,26 @@ class MainActivity : AppCompatActivity() {
     // Start Location Services
     private fun updateLocationViews(location: Location) {
         locationField.text = "${location.latitude}, ${location.longitude}"
+    }
+
+    private fun callWeather(location: Location) {
+        val apiUrl ="http://172.20.10.4:5000/weather?lat=" + location.latitude + "&lon=" + location.longitude
+        val request = JsonObjectRequest(Request.Method.GET, apiUrl, null,
+            Response.Listener { response ->
+                updateTemperature(response)
+            },
+            Response.ErrorListener { error ->
+                Log.e("MyActivity",error.toString())
+            })
+
+        // Add the request to the request queue
+        Volley.newRequestQueue(this).add(request)
+    }
+
+    // Update temperature text view accordingly from the JsonObject
+    private fun updateTemperature(jsonObject: JSONObject) {
+        // TODO: Update the temperature field
+        temperatureField.text = "?"
     }
 
     companion object {
